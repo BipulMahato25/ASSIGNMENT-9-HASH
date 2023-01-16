@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+  
+  int n;
+  cin>>n;
+  int arr[n];
+  for(int i=0;i<n;i++)
+  {
+      cin>>arr[i];
+  }
+  unordered_map<int,pair<int,int> > M;
+  unordered_map<int,pair<int,int> > ::iterator it;
+  for(int i=0; i<n; i++)
+    {
+      it = M.find(arr[i]);
+      
+      if(it != M.end())
+      {
+        pair<int,pair<int,int> > temp = (*it);
+        pair<int,int> p = temp.second;
+        p.second++;
+        M.erase(it);
+        M.insert(make_pair(arr[i],p));
+      }
+      
+      else
+      M.insert(make_pair(arr[i],make_pair(i,1))); 
+    }
+  
+  int min_index = INT_MAX;
+  for(it = M.begin(); it != M.end(); it++) 
+    {
+    pair<int,pair<int,int> > temp = (*it);
+    pair<int,int> p = temp.second;
+    if(p.second > 1)
+      min_index = min(min_index,p.first); 
+    }
+    
+  if(min_index != INT_MAX)
+  cout<<arr[min_index];
+  else  
+  cout<<"No repeating integer found\n";
+  return 0;
+}
